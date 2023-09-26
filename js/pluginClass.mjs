@@ -7,16 +7,6 @@ export default class Plugin extends EventTarget{
         this.Name = name;
     };
 
-
-    sendEvent(eventName, payload) {
-        this.dispatchEvent(new CustomEvent(eventName, {detail: payload}));
-    }
-
-    recieveEvent(eventName, callback) {
-        this.addEventListener(eventName, callback);
-    }
-
-
     // Used by other plugins to get data from the plugin instance
     get Data() {
         return this.#data;
@@ -45,6 +35,4 @@ export default class Plugin extends EventTarget{
     set Overlays(layers) {
         this.#overlays = layers;
     };
-
-
   }

@@ -7,7 +7,7 @@ const plugin = new Plugin("TrainAnnouncement");
 
 const q = `
 <REQUEST>
-      <LOGIN authenticationkey="" />
+      <LOGIN authenticationkey="your key" />
       <QUERY objecttype="TrainAnnouncement" schemaversion="1.8" sseurl="true" limit="1000" orderby="TimeAtLocation DESC">
       <FILTER>
       <EQ name="TrainOwner" value="GC"/>

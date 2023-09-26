@@ -19,7 +19,7 @@ const transformItem = (item) => {
 
 const q = `
 <REQUEST>
-    <LOGIN authenticationkey="" />
+    <LOGIN authenticationkey="your key" />
     <QUERY objecttype="TrainStation" schemaversion="1">
         <INCLUDE>AdvertisedLocationName</INCLUDE>
         <INCLUDE>LocationSignature</INCLUDE>

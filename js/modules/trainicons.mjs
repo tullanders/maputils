@@ -14,8 +14,12 @@ plugin.Overlays = {
 
 const createIcon = (item) => {
   return L.marker(signatureToCoordinates(item.LocationSignature))
-  .bindPopup(item.AdvertisedTrainIdent).addTo(layer);
-  
+  .bindPopup(item.AdvertisedTrainIdent).addTo(layer); 
+}
+
+const updatePosition = (item) => {
+  const train = trains.get(item.AdvertisedTrainIdent);
+  train.setLatLng(signatureToCoordinates(item.LocationSignature));
 }
 
 // Keep the trains in a map
@@ -32,15 +36,15 @@ plugin.addEventListener('EventToPlugin', (e) => {
   if (e.detail.eventName == 'trainData') {
     const data = e.detail.data;
     data.forEach(item => {
-      trains.set(item.AdvertisedTrainIdent, item);
+      // check if train already exists
+      if (trains.has(item.AdvertisedTrainIdent)) {
+        // if it does, update it
+        updatePosition(item);
+      } else {
+        // if it doesn't, create it
+        trains.set(item.AdvertisedTrainIdent, createIcon(item));
+      } 
     });
-    trains.forEach((value, key) => {
-      console.log(value, key)
-
-      createIcon(value);
-    });
-
-    console.log(trains)
   }
 });
 
