@@ -14,7 +14,6 @@ plugin.Overlays = {
 };
 
 const createMarker = (item) => {
-  console.log(item);  
   return L.circleMarker([item.latitude, item.longitude], {radius: 3, color: 'black', fillOpacity: 1, weight: 1, opacity: 1})
   .bindPopup(item.stationName).addTo(layer); 
 }

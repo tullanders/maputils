@@ -1,1 +1,1 @@
-const map = L.map('map').setView([60, 15], 13);
+const map = L.map('map').setView([60, 15], 6);
