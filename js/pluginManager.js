@@ -5,9 +5,10 @@ import trainIcons from './modules/trainicons.mjs';
 import stationsdata from './modules/stationsdata.mjs';
 import stationMarkers from './modules/stationmarkers.mjs';
 import trainAnnouncement from './modules/trainannouncement.mjs';
+import trvwms from './modules/trvwms.mjs';
 
 // Push plugins to array
-const plugins = [osm, openrailwaymap, stationsdata, stationMarkers, trainAnnouncement, trainIcons];
+const plugins = [osm, openrailwaymap, stationsdata, stationMarkers, trainAnnouncement, trainIcons, trvwms];
 
 // Add layers from plugins and also listen for events from plugins
 const baseLayers = {};
