@@ -9,7 +9,7 @@ plugin.Overlays = {
 
 const q = `
 <REQUEST>
-    <LOGIN authenticationkey="c78a25063ffe44bcbdbcf8fa85d13fe1" />
+    <LOGIN authenticationkey="your key" />
       <QUERY objecttype="TrainMessage" schemaversion="1.7">
             <FILTER>
                 <GT name="PrognosticatedEndDateTimeTrafficImpact" value="2023-05-10" />
