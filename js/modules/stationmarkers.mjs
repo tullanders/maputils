@@ -1,35 +1,33 @@
 import Plugin from "../pluginClass.mjs";
 
 const plugin = new Plugin("StationsMarkers");
-let stations;
-const signatureToCoordinates = (signature) => {
-  if (signature == undefined) return [0,0];
-  const station = stations.find(item => item.stationSignature == signature && item.latitude && item.longitude);
-  return [station.longitude, station.latitude];
-}
 
 const layer = L.layerGroup();
 plugin.Overlays = {
-  'Trainstations': layer
+  'Train Stations': layer
 };
 
 const createMarker = (item) => {
-  return L.circleMarker([item.latitude, item.longitude], {radius: 3, color: 'black', fillOpacity: 1, weight: 1, opacity: 1})
-  .bindPopup(item.stationName).addTo(layer); 
+  const marker =  L.circleMarker([item.latitude, item.longitude], {radius: 3, color: 'black', fillOpacity: 1, weight: 1, opacity: 1})
+    .addTo(layer)
+    .on('click', (e) => {
+      L.DomEvent.stopPropagation(e);
+      plugin.dispatchEvent(new CustomEvent('EventFromPlugin', {detail: {data:item, eventName: 'stationClicked'}}));
+
+  });
 }
 
 
 
-// Listen from stations and trains 
-// (we can't do anytning until we have both because we need to know the coordinates of the stations)
-
+// Get stations through the station event
 plugin.addEventListener('EventToPlugin', (e) => {
   if (e.detail.eventName == 'stations') {
-    console.log(e.detail.data);
-    stations = e.detail.data;
-    e.detail.data.forEach(item => { 
-      createMarker(item);
-    });
+    e.detail.data.then(data => {
+      data.forEach(item => { 
+        createMarker(item);
+      });      
+    })
+
   }
 
 });

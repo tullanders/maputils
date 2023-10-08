@@ -1,20 +1,23 @@
 // Import all plugins
 import openrailwaymap from './modules/openrailwaymap.mjs';
 import osm from './modules/osm.mjs';
-import trainIcons from './modules/trainicons.mjs';
 import stationsdata from './modules/stationsdata.mjs';
+import trainIcons from './modules/trainicons.mjs';
 import stationMarkers from './modules/stationmarkers.mjs';
 import trainAnnouncement from './modules/trainannouncement.mjs';
-import trvwms from './modules/trvwms.mjs';
 import smhiradar from './modules/smhiradar.mjs';
+import sidebar from './modules/sidebar.mjs';
+import stationsidebar from './modules/stationsidebar.mjs';
+import trainMessage from './modules/trainmessage.mjs';
 
 // Push plugins to array
-const plugins = [osm, openrailwaymap, stationsdata, stationMarkers, trainAnnouncement, trainIcons, trvwms, smhiradar];
+const plugins = [osm, openrailwaymap,smhiradar, stationsdata, trainAnnouncement, trainIcons, trainMessage, sidebar, stationMarkers, stationsidebar];
 
 // Add layers from plugins and also listen for events from plugins
 const baseLayers = {};
 const overlays = {};
 plugins.forEach(plugin => {
+    
     if (plugin.BaseLayers) {
         Object.assign(baseLayers, plugin.BaseLayers);
     };
@@ -28,6 +31,7 @@ plugins.forEach(plugin => {
     });
 });
 
+
 // Dispatch event to all plugins except sender
 const sendEvent = (sender, eventName, payload) => {
     plugins.forEach(plugin => {
@@ -35,6 +39,10 @@ const sendEvent = (sender, eventName, payload) => {
     });
 };
 
+// Send to all plugins that they have been loaded
+plugins.forEach(plugin => {
+    plugin.dispatchEvent(new CustomEvent('EventToPlugin', {detail: {sender: plugin, data:plugin.Name, eventName: 'pluginLoaded'}}));
+});
+
 // Add layers to map
 var layerControl = L.control.layers(baseLayers, overlays).addTo(map);
-
